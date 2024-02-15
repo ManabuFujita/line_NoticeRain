@@ -79,11 +79,17 @@ def main():
         dateStringStart = ''
         dateStringEnd = ''
         for w in weatherlist:
+            # 既に降っているなら通知しない
+            if w["Type"] != 'forecast': # 実測値
+                if w['Rainfall'] > 0:
+                    needNotice = False # 通知不要
+                    break
+
             if needNotice == False:
                 if w["Type"] == 'forecast': # 予測値
                     print(w['Rainfall'])
                     if w['Rainfall'] > 0:
-                        needNotice = True
+                        needNotice = True # 通知要
                         dateStringStart = w['Date']
                         rainfall = w['Rainfall']
             else:
